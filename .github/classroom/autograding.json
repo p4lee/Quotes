@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "Checkpoint 01",
+      "setup": "",
+      "run": "dotnet test test/t1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 4
+    },
+    {
+      "name": "Checkpoint 02",
+      "setup": "",
+      "run": "dotnet test test/t2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    },
+    {
+      "name": "Checkpoint 03",
+      "setup": "",
+      "run": "dotnet test test/t3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    }  
+  ]
+}
