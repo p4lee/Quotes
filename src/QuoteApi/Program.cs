@@ -1,3 +1,7 @@
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using QuoteApi.Data;
+
 namespace QuoteApi;
 
 // DO NOT remove the Program class declaration or the Main method. These are needed for the tests.

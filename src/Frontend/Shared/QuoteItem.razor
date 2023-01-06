@@ -1,0 +1,28 @@
+﻿@using SharedLib
+@typeparam TItem
+
+<div class="well quote">
+    <!-- Render the quote data here -->
+</div>
+
+ @if (EditLink != null)
+  {
+    <NavLink href="@EditLink">Edit</NavLink>
+  }
+
+  @if (DeleteLink != null)
+  {
+    <NavLink href="@DeleteLink">Delete</NavLink>
+  }
+
+
+@code {
+  [Parameter]
+  public QuoteDTO Quote { get; set; }
+
+  [Parameter]
+  public string EditLink { get; set; }
+
+  [Parameter]
+  public string DeleteLink { get; set; }
+}
