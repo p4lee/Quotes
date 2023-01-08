@@ -25,9 +25,16 @@ namespace QuoteApi
        */
             services.AddDbContext<QuoteContext>(options =>
             options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
         
         services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                    builder => builder.AllowAnyOrigin());
+            });
         }
+    
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -42,7 +49,7 @@ namespace QuoteApi
                 var context = serviceScope.ServiceProvider.GetRequiredService<QuoteContext>();
                 context.Database.Migrate();
             }
-
+            app.UseCors("AllowOrigin");
             app.UseHttpsRedirection();
 
             app.UseRouting();

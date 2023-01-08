@@ -24,12 +24,12 @@ else
 
 @code {
   private List<QuoteDTO> quotes;
-
+    private const string ServiceEndpoint = "https://localhost:7180/quotes";
   protected override async Task OnInitializedAsync()
   {
     try
     {
-      quotes = await Http.GetFromJsonAsync<List<QuoteDTO>>("/quotes");
+      quotes = await Http.GetFromJsonAsync<List<QuoteDTO>>(ServiceEndpoint);
     }
     catch (Exception ex)
     {

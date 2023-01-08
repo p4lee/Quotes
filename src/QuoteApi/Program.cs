@@ -21,6 +21,8 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+
         builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
         {
             policy.AllowAnyHeader();
@@ -45,6 +47,7 @@ public class Program
                 app.UseSwaggerUI();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
