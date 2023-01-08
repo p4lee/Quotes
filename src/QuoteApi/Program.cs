@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors;
 using QuoteApi.Data;
 
 namespace QuoteApi;
@@ -20,22 +21,37 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+        {
+            policy.AllowAnyHeader();
+            policy.AllowAnyMethod();
+            policy.AllowAnyOrigin();
+        }));
+        builder.Services.AddDbContext<QuoteContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+
+        using (var scope = app.Services.CreateScope())
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            var services = scope.ServiceProvider;
+
+            SeedData.Initialize(services);
         }
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
-        app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
-        app.UseAuthorization();
+            app.UseAuthorization();
 
-        app.MapControllers();
+            app.MapControllers();
 
-        app.Run();
+            app.Run();
+        
     }
 }

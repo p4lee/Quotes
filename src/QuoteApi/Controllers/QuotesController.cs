@@ -28,6 +28,7 @@ namespace QuoteApi.Controllers
         [HttpGet]
         public async Task<ActionResult<QuoteDTO[]>> GetTop5LatestQuotes()
         {
+
             var quotes = await _context.Quotes
                 .OrderByDescending(q => q.QuoteCreateDate)
                 .Take(5)
@@ -36,7 +37,7 @@ namespace QuoteApi.Controllers
                     Id = q.Id,
                     Quote = q.TheQuote,
                     SaidBy = q.WhoSaid,
-                    When = q.WhenWasSaid
+                    When = q.WhenWasSaid.ToString("O")
                 })
                 .ToArrayAsync();
 
@@ -61,7 +62,7 @@ namespace QuoteApi.Controllers
                     Id = q.Id,
                     Quote = q.TheQuote,
                     SaidBy = q.WhoSaid,
-                    When = q.WhenWasSaid
+                    When = q.WhenWasSaid.ToString("O")
                 })
                 .ToArrayAsync();
 
@@ -93,60 +94,28 @@ namespace QuoteApi.Controllers
                 Id = quote.Id,
                 Quote = quote.TheQuote,
                 SaidBy = quote.WhoSaid,
-                When = quote.WhenWasSaid 
+                When = quote.WhenWasSaid.ToString("O") 
             };
             return Ok(quoteDto);
         }
         
 
 
-
-
-
-        // Create new quote for user
-                /*
-                [HttpPost("{username}")]
-                public async Task<ActionResult<QuoteDTO>> CreateQuote(string username, QuoteDTO quote)
-                {
-                    // Create a new Quote object from the QuoteDTO
-                    var newQuote = new Quote
-                    {
-                        TheQuote = quote.Quote,
-                        WhoSaid = quote.SaidBy,
-                        WhenWasSaid = quote.When,
-                        QuoteCreator = username,
-                        QuoteCreatorNormalized = username.ToUpper(),
-                        QuoteCreateDate = DateTime.Now
-                    };
-                    // Add the new Quote object to the context and save the changes to the database
-                    _context.Quotes.Add(newQuote);
-                    await _context.SaveChangesAsync();
-
-                    // Return the created Quote object as a QuoteDTO in the response
-                    var createdQuote = new QuoteDTO
-                    {
-                        Id = newQuote.Id,
-                        Quote = newQuote.TheQuote,
-                        SaidBy = newQuote.WhoSaid,
-                        When = newQuote.WhenWasSaid
-                    };
-                    return Ok(CreatedAtAction(nameof(GetQuoteByIdAndUsername), new { username = username, id = newQuote.Id }, createdQuote));
-                }
-                */
-
-                [HttpPost("{username}")]
+        [HttpPost("{username}")]
         public async Task<ActionResult<QuoteDTO>> PostQuote(string username, QuoteDTO quoteDto)
         {
             // map the QuoteDTO object to a Quote entity
+            DateTime dateTime = DateTime.Now;
+            string isoDate = dateTime.ToString("O");
 
             var quote = new Quote
             {
                 TheQuote = quoteDto.Quote,
                 WhoSaid = quoteDto.SaidBy,
-                WhenWasSaid = quoteDto.When, 
+                WhenWasSaid = DateTime.Parse(quoteDto.When), 
                 QuoteCreator = username,
                 QuoteCreatorNormalized = username.ToUpper(),
-                QuoteCreateDate = DateTime.Now
+                QuoteCreateDate = DateTime.Parse(isoDate), 
             };
 
             // add the quote to the database
@@ -158,35 +127,6 @@ namespace QuoteApi.Controllers
             return CreatedAtAction(nameof(GetQuoteById), new { username = username, id = quote.Id }, quoteDto);
         }
 
-        /*
-        // PUT /quotes/berry/4
-        [HttpPut("{username}/{id}")]
-        public async Task<ActionResult<QuoteDTO>> EditQuote(string username, int id, QuoteDTO quote)
-        {
-            var existingQuote = await _context.Quotes
-                .Where(q => q.Id == id && q.QuoteCreatorNormalized == username.ToUpper())
-                .SingleOrDefaultAsync();
-
-            if (existingQuote == null)
-            {
-                return NotFound();
-            }
-
-            existingQuote.TheQuote = quote.Quote;
-            existingQuote.WhoSaid = quote.SaidBy;
-            existingQuote.WhenWasSaid = quote.When;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(new QuoteDTO
-            {
-                Id = existingQuote.Id,
-                Quote = existingQuote.TheQuote,
-                SaidBy = existingQuote.WhoSaid,
-                When = existingQuote.WhenWasSaid
-            });
-        }
-        */
 
 
         // PUT: quotes/{username}/{id}
@@ -212,7 +152,7 @@ namespace QuoteApi.Controllers
             // update the quote properties with the values from the QuoteDTO object
             quote.TheQuote = quoteDto.Quote;
             quote.WhoSaid = quoteDto.SaidBy;
-            quote.WhenWasSaid = quoteDto.When; // parse the ISO 8601 date string
+            quote.WhenWasSaid = DateTime.Parse(quoteDto.When); 
 
             // update the quote in the database
             _context.Quotes.Update(quote);

@@ -1,0 +1,48 @@
+﻿@page "/quotes/{User}"
+@using SharedLib
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.AspNetCore.Components.Routing
+@using Frontend.Shared
+@using System.Collections.Generic
+
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject ILogger<QuotesList> Logger
+
+<h2>@User's Quotes</h2>
+@if (quotes == null)
+{
+
+  <p><em>Loading...</em></p>
+}
+else
+{
+  @foreach (var quote in quotes)
+  {
+    <QuoteItem Quote="quote" EditLink=$/quotes/edit/{User}/{quote.Id} DeleteLink=$/quotes/delete/{User}/{quote.Id} />
+  }
+}
+
+@code {
+        [Parameter] public string User { get; set; }
+        private List<QuoteDTO> quotes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(User))
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+        try
+        {
+            quotes = await Http.GetFromJsonAsync<List<QuoteDTO>>($"/quotes/{User}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading quotes");
+        }
+
+        }
+}
+}

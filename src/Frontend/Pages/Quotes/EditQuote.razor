@@ -1,0 +1,56 @@
+﻿@page "/quotes/edit/{User}/{Id}"
+@using SharedLib
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject ILogger<EditQuote> Logger
+
+<h2>Edit Quote</h2>
+
+<EditForm Model="quote" OnValidSubmit="HandleValidSubmit">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
+  <InputText id="quote" @bind-Value="quote.Quote" />
+  <InputText id="saidby" @bind-Value="quote.SaidBy" />
+  <InputText id="when" @bind-Value="quote.When"/>
+  <button type="submit">Save</button>
+</EditForm>
+
+@code {
+  [Parameter] public string User { get; set; }
+  [Parameter] public string Id { get; set; }
+  private QuoteDTO quote;
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (string.IsNullOrEmpty(User))
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+        try
+        {
+            quote = await Http.GetFromJsonAsync<QuoteDTO>($"/quotes/{User}/{Id}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading quote");
+        }
+    }
+
+    private async void HandleValidSubmit()
+    {
+        try
+        {
+            await Http.PutAsJsonAsync($"/quotes/{User}/{Id}", quote);
+            Navigation.NavigateTo($"/quotes/{User}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error saving quote");
+        }
+    }
+}

@@ -1,20 +1,18 @@
 ﻿@using SharedLib
-@typeparam TItem
+@using System.Linq;
+
 
 <div class="well quote">
-    <!-- Render the quote data here -->
+    <h3>@Quote.Quote</h3>
+    <p>Said by: @Quote.SaidBy</p>
+    <p>When: @Quote.When</p>
+
+    @if (!string.IsNullOrEmpty(EditLink) && !string.IsNullOrEmpty(DeleteLink))
+    {
+        <NavLink class="btn btn-primary" href="@EditLink">Edit</NavLink>
+        <NavLink class="btn btn-danger" href="@DeleteLink">Delete</NavLink>
+    }
 </div>
-
- @if (EditLink != null)
-  {
-    <NavLink href="@EditLink">Edit</NavLink>
-  }
-
-  @if (DeleteLink != null)
-  {
-    <NavLink href="@DeleteLink">Delete</NavLink>
-  }
-
 
 @code {
   [Parameter]

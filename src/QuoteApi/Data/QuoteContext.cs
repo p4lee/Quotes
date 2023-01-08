@@ -13,7 +13,7 @@ namespace QuoteApi.Data
 
         public DbSet<Quote> Quotes { get; set; }
 
-
+        /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Quote>().ToTable("Quotes");
@@ -25,6 +25,7 @@ namespace QuoteApi.Data
             modelBuilder.Entity<Quote>().Property(q => q.QuoteCreatorNormalized).IsRequired().HasMaxLength(100).HasComputedColumnSql("upper([QuoteCreator])");
             modelBuilder.Entity<Quote>().Property(q => q.QuoteCreateDate).IsRequired().HasDefaultValueSql("datetime('now')");
         }
+        */
     }
 
 }

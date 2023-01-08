@@ -1,0 +1,56 @@
+﻿
+@page "/quotes/delete/{User}/{Id}"
+@using SharedLib
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject ILogger<DeleteQuote> Logger
+
+<h2>Delete Quote</h2>
+
+<div>
+    <p>Are you sure you want to delete the following quote?</p>
+    <QuoteItem Quote="quote" />
+</div>
+
+<button type="button" @onclick="HandleDeleteClick">Delete</button>
+
+@code {
+    [Parameter] public string User { get; set; }
+    [Parameter] public string Id { get; set; }
+    private QuoteDTO quote;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(User))
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        try
+        {
+            quote = await Http.GetFromJsonAsync<QuoteDTO>($"/quotes/{User}/{Id}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading quote");
+        }
+    }
+
+    private async void HandleDeleteClick()
+    {
+        try
+        {
+            await Http.DeleteAsync($"/quotes/{User}/{Id}");
+            Navigation.NavigateTo($"/quotes/{User}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error deleting quote");
+        }
+    }
+}$"/quotes/{User}/{Id}");

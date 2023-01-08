@@ -1,0 +1,22 @@
+﻿@page "/login"
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+
+@inject ILogger<Login> Logger
+@inject NavigationManager Navigation
+
+<form onsubmit="@OnSubmit">
+    <label for="username">Username:</label>
+    <input id="username" type="text" @bind-value="Username" />
+    <button type="submit">Log in</button>
+</form>
+
+@code {
+    private string Username { get; set; }
+
+    private void OnSubmit()
+    {
+        // Navigate to quotes page for the logged-in user
+        Navigation.NavigateTo($"/quotes/{Username}");
+    }
+}

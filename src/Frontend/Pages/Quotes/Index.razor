@@ -1,0 +1,39 @@
+﻿@page "/"
+@using SharedLib
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Forms
+@using Frontend.Shared
+@using System.Collections.Generic
+
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject ILogger<Index> Logger
+
+@if (quotes == null)
+{
+  <p><em>Loading...</em></p>
+}
+else
+{
+  @foreach (var quote in quotes)
+  {
+    <QuoteItem Quote="quote" />
+  }
+}
+
+@code {
+  private List<QuoteDTO> quotes;
+
+  protected override async Task OnInitializedAsync()
+  {
+    try
+    {
+      quotes = await Http.GetFromJsonAsync<List<QuoteDTO>>("/quotes");
+    }
+    catch (Exception ex)
+    {
+      Logger.LogError(ex, "Error loading quotes");
+    }
+  }
+}

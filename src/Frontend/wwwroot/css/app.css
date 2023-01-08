@@ -33,7 +33,11 @@ a, .btn-link {
 .validation-message {
     color: red;
 }
-
+.quote {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
+}
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

@@ -1,0 +1,62 @@
+﻿@page "/quotes/add/{User}"
+@using SharedLib
+@using Microsoft.AspNetCore.Components.WebAssembly.Http
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject ILogger<AddQuote> Logger
+
+<h2>Add Quote</h2>
+
+<EditForm Model="@quote" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        <label for="quote">Quote:</label>
+        <InputText id="quote" @bind-Value="quote.Quote" />
+        <ValidationMessage For="@(() => quote.Quote)" />
+    </p>
+    <p>
+        <label for="saidBy">Said by:</label>
+        <InputText id="saidBy" @bind-Value="quote.SaidBy" />
+        <ValidationMessage For="@(() => quote.SaidBy)" />
+    </p>
+    <p>
+        <label for="when">When:</label>
+        <InputText id="when" @bind-Value="quote.When"/>
+    <label for="quoteCreator">Quote creator:</label>
+    <InputText id="quoteCreator" @bind-Value="quote.QuoteCreator" />
+    <ValidationMessage For="@(() => quote.QuoteCreator)" />
+</p>
+<p>
+    <button type="submit">Save</button>
+</p>
+</EditForm>
+@code {
+    [Parameter] public string User { get; set; }
+    private QuoteDTO quote = new QuoteDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(User))
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+    }
+
+    private async void HandleValidSubmit()
+    {
+        try
+        {
+            await Http.PostAsJsonAsync($"/quotes/{User}", quote);
+            Navigation.NavigateTo($"/quotes/{User}");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error saving quote");
+        }
+    }
+}
