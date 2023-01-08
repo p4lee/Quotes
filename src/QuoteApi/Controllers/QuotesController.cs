@@ -37,7 +37,7 @@ namespace QuoteApi.Controllers
                     Id = q.Id,
                     Quote = q.TheQuote,
                     SaidBy = q.WhoSaid,
-                    When = q.WhenWasSaid.ToString("O")
+                    When = q.WhenWasSaid.ToString("yyyy-MM-dd")
                 })
                 .ToArrayAsync();
 
@@ -62,7 +62,7 @@ namespace QuoteApi.Controllers
                     Id = q.Id,
                     Quote = q.TheQuote,
                     SaidBy = q.WhoSaid,
-                    When = q.WhenWasSaid.ToString("O")
+                    When = q.WhenWasSaid.ToString("yyyy-MM-dd")
                 })
                 .ToArrayAsync();
 
@@ -94,7 +94,7 @@ namespace QuoteApi.Controllers
                 Id = quote.Id,
                 Quote = quote.TheQuote,
                 SaidBy = quote.WhoSaid,
-                When = quote.WhenWasSaid.ToString("O") 
+                When = quote.WhenWasSaid.ToString("yyyy-MM-dd") 
             };
             return Ok(quoteDto);
         }
@@ -106,7 +106,7 @@ namespace QuoteApi.Controllers
         {
             // map the QuoteDTO object to a Quote entity
             DateTime dateTime = DateTime.Now;
-            string isoDate = dateTime.ToString("O");
+            string isoDate = dateTime.ToString("yyyy-MM-dd");
 
             var quote = new Quote
             {
