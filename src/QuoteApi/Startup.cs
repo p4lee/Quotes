@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
 using QuoteApi.Data;
 
 namespace QuoteApi
@@ -20,21 +15,21 @@ namespace QuoteApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-       /* string connectionString = Configuration.GetConnectionString("QuoteDb");
-            services.AddDbContext<QuoteContext>(options => options.UseSqlite(connectionString));
-       */
+            /* string connectionString = Configuration.GetConnectionString("QuoteDb");
+                 services.AddDbContext<QuoteContext>(options => options.UseSqlite(connectionString));
+            */
             services.AddDbContext<QuoteContext>(options =>
             options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
-        
-        services.AddControllers();
+
+            services.AddControllers();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigin",
                     builder => builder.AllowAnyOrigin());
             });
         }
-    
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -42,7 +37,7 @@ namespace QuoteApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            using (var serviceScope = 
+            using (var serviceScope =
             app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
 
             {

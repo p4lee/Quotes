@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+﻿using JsonIgnoreAttribute = Newtonsoft.Json.JsonIgnoreAttribute;
 
 namespace QuoteApi.Data
 
@@ -10,8 +9,11 @@ namespace QuoteApi.Data
         public string TheQuote { get; set; }
         public string WhoSaid { get; set; }
         public DateTime WhenWasSaid { get; set; }
+        [JsonIgnore]
         public string QuoteCreator { get; set; }
+        [JsonIgnore]
         public string QuoteCreatorNormalized { get; set; }
+        [JsonIgnore]
         public DateTime QuoteCreateDate { get; set; }
     }
 }

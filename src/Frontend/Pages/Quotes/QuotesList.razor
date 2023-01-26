@@ -19,7 +19,7 @@ else
 {
   @foreach (var quote in quotes)
   {
-    <QuoteItem Quote="quote" EditLink=$/quotes/edit/{User}/{quote.Id} DeleteLink=$/quotes/delete/{User}/{quote.Id} />
+    <QuoteItem Quote="quote" EditLink=$/quotes/edit/{User}/{quote.Id} DeleteLink=$/quotes/delete/User/quote.Id />
   }
 }
 

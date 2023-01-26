@@ -1,6 +1,4 @@
-﻿
-
-namespace SharedLib;
+﻿namespace SharedLib;
 
 public class QuoteDTO
 {
@@ -9,9 +7,13 @@ public class QuoteDTO
     public string SaidBy { get; set; }
 
     public string When { get; set; }
+    /*
+    [JsonIgnore]
     public string QuoteCreator { get; set; }
+    [JsonIgnore]
     public string QuoteCreatorNormalized { get; set; }
+    [JsonIgnore]
     public DateTime QuoteCreateDate { get; set; }
-
+    */
 
 }

@@ -1,6 +1,4 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Cors;
 using QuoteApi.Data;
 
 namespace QuoteApi;
@@ -40,21 +38,21 @@ public class Program
 
             SeedData.Initialize(services);
         }
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
-            app.UseCors();
-            app.UseHttpsRedirection();
+        app.UseCors();
+        app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+        app.UseAuthorization();
 
-            app.MapControllers();
+        app.MapControllers();
 
-            app.Run();
-        
+        app.Run();
+
     }
 }

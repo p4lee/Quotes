@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using QuoteApi.Data;
 using SharedLib;
-using System.Globalization;
+using System.Text.Json;
 
 namespace QuoteApi.Controllers
 {
@@ -22,7 +19,7 @@ namespace QuoteApi.Controllers
             _context = context;
         }
 
-        
+
         // GET /quotes
         // returns top 5 latest quotes
         [HttpGet]
@@ -38,6 +35,7 @@ namespace QuoteApi.Controllers
                     Quote = q.TheQuote,
                     SaidBy = q.WhoSaid,
                     When = q.WhenWasSaid.ToString("yyyy-MM-dd")
+
                 })
                 .ToArrayAsync();
 
@@ -46,7 +44,7 @@ namespace QuoteApi.Controllers
                 return NotFound();
             }
 
-            return quotes;
+            return Ok(JsonSerializer.Serialize(quotes));
         }
 
 
@@ -62,7 +60,8 @@ namespace QuoteApi.Controllers
                     Id = q.Id,
                     Quote = q.TheQuote,
                     SaidBy = q.WhoSaid,
-                    When = q.WhenWasSaid.ToString("yyyy-MM-dd")
+                    When = q.WhenWasSaid.ToString("yyyy-MM-dd"),
+
                 })
                 .ToArrayAsync();
 
@@ -94,11 +93,11 @@ namespace QuoteApi.Controllers
                 Id = quote.Id,
                 Quote = quote.TheQuote,
                 SaidBy = quote.WhoSaid,
-                When = quote.WhenWasSaid.ToString("yyyy-MM-dd") 
+                When = quote.WhenWasSaid.ToString("yyyy-MM-dd")
             };
             return Ok(quoteDto);
         }
-        
+
 
 
         [HttpPost("{username}")]
@@ -112,10 +111,10 @@ namespace QuoteApi.Controllers
             {
                 TheQuote = quoteDto.Quote,
                 WhoSaid = quoteDto.SaidBy,
-                WhenWasSaid = DateTime.Parse(quoteDto.When), 
+                WhenWasSaid = DateTime.Parse(quoteDto.When),
                 QuoteCreator = username,
                 QuoteCreatorNormalized = username.ToUpper(),
-                QuoteCreateDate = DateTime.Parse(isoDate), 
+                QuoteCreateDate = DateTime.Parse(isoDate),
             };
 
             // add the quote to the database
@@ -152,7 +151,7 @@ namespace QuoteApi.Controllers
             // update the quote properties with the values from the QuoteDTO object
             quote.TheQuote = quoteDto.Quote;
             quote.WhoSaid = quoteDto.SaidBy;
-            quote.WhenWasSaid = DateTime.Parse(quoteDto.When); 
+            quote.WhenWasSaid = DateTime.Parse(quoteDto.When);
 
             // update the quote in the database
             _context.Quotes.Update(quote);

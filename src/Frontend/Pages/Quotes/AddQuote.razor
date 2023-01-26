@@ -1,4 +1,4 @@
-﻿@page "/quotes/add/{User}"
+﻿@page "/quotes/add"
 @using SharedLib
 @using Microsoft.AspNetCore.Components.WebAssembly.Http
 @using Microsoft.AspNetCore.Components.Routing
@@ -26,9 +26,6 @@
     <p>
         <label for="when">When:</label>
         <InputText id="when" @bind-Value="quote.When"/>
-    <label for="quoteCreator">Quote creator:</label>
-    <InputText id="quoteCreator" @bind-Value="quote.QuoteCreator" />
-    <ValidationMessage For="@(() => quote.QuoteCreator)" />
 </p>
 <p>
     <button type="submit">Save</button>

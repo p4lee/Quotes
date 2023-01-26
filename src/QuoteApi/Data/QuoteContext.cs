@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using QuoteApi.Data;
-using System.Collections.Generic;
 
 namespace QuoteApi.Data
 {
@@ -8,7 +6,7 @@ namespace QuoteApi.Data
     {
 
         public QuoteContext(DbContextOptions<QuoteContext> options)
-            : base(options) 
+            : base(options)
         { }
 
         public DbSet<Quote> Quotes { get; set; }
