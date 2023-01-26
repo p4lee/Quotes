@@ -1,47 +1,5 @@
-# Task 10: Web API, EF and Blazor
+Web API, EF and Blazor
 
-<img alt="points bar" align="right" height="36" src="../../blob/badges/.github/badges/points-bar.svg" />
-
-![GitHub Classroom Workflow](../../workflows/GitHub%20Classroom%20Workflow/badge.svg?branch=main)
-
-***
-
-## Student info
-
-> Write your name, your estimation on how many points you will get and an estimate on how long it took to make the answer
-
-- Student name: 
-- Estimated points: 
-- Estimated time (hours): 
-
-***
-
-## Purpose of this task
-
-The purposes of this task are:
-
-- to learn to create a web api with Entity Framework
-- to learn to create a Blazor WebAssembly app that uses the web api
-- to learn to create a fullstack app with .NET
-
-## Material for the task
-
-> **Following material will help with the task.**
-
-It is recommended that you will check the material before begin coding.
-
-1. [Create web APIs with ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-6.0)
-2. [Tutorial: Create a web API with ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0)
-3. [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
-4. [ASP.NET Core Blazor](https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-6.0)
-5. [Build a Blazor todo list app](https://docs.microsoft.com/en-us/aspnet/core/blazor/tutorials/build-a-blazor-app?view=aspnetcore-6.0&pivots=webassembly)
-6. [Call a web API from ASP.NET Core Blazor](https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-6.0&pivots=webassembly)
-7. [Enable Cross-Origin Requests (CORS) in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0)
-8. [ASP.NET Core Blazor state management](https://docs.microsoft.com/en-us/aspnet/core/blazor/state-management?view=aspnetcore-6.0&pivots=webassembly)
-
-## The Task
-
-> Note! This task's evaluation differs from the other tasks.
 
 The app is called "The Quotes". The idea is to handle quotes like:
 
@@ -143,26 +101,4 @@ The app requirements:
 
     Use `EditForm` component with EditQuote and AddQuote pages with proper `Input` components for the three (3) data fields. Do not write input component for the id field. The pages has only one submit button to save the changes.
 
-    The DeleteQuote page shows the quote's information and has only one submit button to confirm the deletion.
 
-    In every page in Quotes folder print the user's name in h2 element.
-
-### Evaluation points
-
-1. The Entity Framework part of the task description for four (4) points.
-2. The Web API part of the task desctiption for six (6) points.
-3. The Frontend part of the task desctiption for ten (10) points.
-
-Even when the evaluation points are indiviually checked it is mandatory that the previous steps work for later steps (i.e. to get 10 points from step 3 the steps 1 and 2 must also work). You cannot get 10 points from this task by only making the step 3.
-
-> Note! Read the task description and the evaluation points to get the task's specification (what is required to make the app complete).
-
-## Task evaluation
-
-Evaluation points for the task are described above. An evaluation point either works or it does not work there is no "it kind of works" step inbetween. Be sure to test your work. All working evaluation points are added to the task total and will count towards the course total. The task is worth twenty (20) points. Each evaluation point is checked individually and each will provide four (4), six (6) and ten (10) points so there is three checkpoints. Checkpoints are designed so that they may require additional code, that is not checked or tested, to function correctly.
-
-## DevOps
-
-There is a DevOps pipeline added to this task. The pipeline will build the solution and run automated tests on it. The pipeline triggers when a commit is pushed to GitHub on main branch. So remember to `git commit` `git push` when you are ready with the task. The automation uses GitHub Actions and some task runners. The automation is in folder named .github.
-
-> **DO NOT modify the contents of .github or test folders.**
